@@ -1,12 +1,12 @@
 package com.qiusu.gmall.user.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.qiusu.gmall.bean.UmsMember;
 import com.qiusu.gmall.bean.UmsMemberReceiveAddress;
 import com.qiusu.gmall.service.UserService;
 import com.qiusu.gmall.user.mapper.UmsMemberReceiveAddressMapper;
 import com.qiusu.gmall.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
