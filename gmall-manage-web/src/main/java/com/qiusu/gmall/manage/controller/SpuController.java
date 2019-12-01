@@ -19,6 +19,7 @@ public class SpuController {
     @Reference
     SpuService spuService;
 
+    //查询spu
     @RequestMapping("spuList")
     @ResponseBody
     public List<PmsProductInfo> spuList(String catalog3Id){
