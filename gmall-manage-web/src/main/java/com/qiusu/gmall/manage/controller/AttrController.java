@@ -3,6 +3,7 @@ package com.qiusu.gmall.manage.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.qiusu.gmall.bean.PmsBaseAttrInfo;
 import com.qiusu.gmall.bean.PmsBaseAttrValue;
+import com.qiusu.gmall.bean.PmsBaseSaleAttr;
 import com.qiusu.gmall.service.AttrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,12 @@ public class AttrController {
     public List<PmsBaseAttrValue> getAttrValueList(String attrId){
 
         return attrService.getAttrValueList(attrId);
+    }
+
+    @RequestMapping("baseSaleAttrList")
+    @ResponseBody
+    public List<PmsBaseSaleAttr> baseSaleAttrList(){
+        return attrService.baseSaleAttrList();
     }
 
 }
