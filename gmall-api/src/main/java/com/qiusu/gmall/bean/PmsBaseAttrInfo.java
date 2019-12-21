@@ -1,7 +1,5 @@
 package com.qiusu.gmall.bean;
 
-import com.qiusu.gmall.bean.PmsBaseAttrValue;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;

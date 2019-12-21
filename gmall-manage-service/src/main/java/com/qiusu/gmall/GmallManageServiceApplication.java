@@ -1,4 +1,4 @@
-package com.qiusu.gmall.manage;
+package com.qiusu.gmall;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,5 +1,4 @@
 package com.qiusu.gmall.bean;
-
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;

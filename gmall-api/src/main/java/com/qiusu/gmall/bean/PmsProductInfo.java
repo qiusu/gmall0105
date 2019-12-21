@@ -1,6 +1,7 @@
 package com.qiusu.gmall.bean;
 
 
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -28,6 +29,7 @@ public class PmsProductInfo implements Serializable {
 
     @Transient
     private List<PmsProductSaleAttr> spuSaleAttrList;
+
     @Transient
     private List<PmsProductImage> spuImageList;
 
@@ -82,5 +84,4 @@ public class PmsProductInfo implements Serializable {
     }
 
 }
-
 
