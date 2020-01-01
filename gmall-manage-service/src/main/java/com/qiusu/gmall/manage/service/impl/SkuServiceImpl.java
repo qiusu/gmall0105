@@ -103,6 +103,10 @@ public class SkuServiceImpl implements SkuService {
                     }else {
                         jedis.setex(skuKey,60*3,JSON.toJSONString(""));
                     }
+
+                    Thread.sleep(5*1000);
+
+                    jedis.del(skuLock);
                 }else {
                     Thread.sleep(3000);
                     return getSkubyId(skuId);
@@ -127,6 +131,21 @@ public class SkuServiceImpl implements SkuService {
     public List<PmsSkuInfo> getSkuSaleAttrValueListBySpu(String productId) {
         List<PmsSkuInfo> pmsSkuInfos = pmsSkuInfoMapper.selectSkuSaleAttrValueListBySpu(productId);
 
+        return pmsSkuInfos;
+    }
+
+    @Override
+    public List<PmsSkuInfo> getAllSku() {
+        List<PmsSkuInfo> pmsSkuInfos = pmsSkuInfoMapper.selectAll();
+
+        for (PmsSkuInfo pmsSkuInfo : pmsSkuInfos) {
+            String id = pmsSkuInfo.getId();
+
+            PmsSkuAttrValue pmsSkuAttrValue = new PmsSkuAttrValue();
+            pmsSkuAttrValue.setSkuId(id);
+            List<PmsSkuAttrValue> select = pmsSkuAttrValueMapper.select(pmsSkuAttrValue);
+            pmsSkuInfo.setSkuAttrValueList(select);
+        }
         return pmsSkuInfos;
     }
 }

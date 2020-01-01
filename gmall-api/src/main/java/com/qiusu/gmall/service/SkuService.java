@@ -11,4 +11,6 @@ public interface SkuService {
     PmsSkuInfo getSkubyId(String skuId);
 
     List<PmsSkuInfo> getSkuSaleAttrValueListBySpu(String productId);
+
+    List<PmsSkuInfo> getAllSku();
 }
