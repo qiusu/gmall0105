@@ -7,7 +7,9 @@ import com.qiusu.gmall.bean.PmsBaseSaleAttr;
 import java.util.HashSet;
 import java.util.List;
 
+
 public interface AttrService {
+
     List<PmsBaseAttrInfo> attrInfoList(String catalog3Id);
 
     String saveAttrInfo(PmsBaseAttrInfo pmsBaseAttrInfo);

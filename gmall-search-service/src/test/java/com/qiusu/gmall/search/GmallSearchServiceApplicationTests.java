@@ -28,23 +28,44 @@ import java.util.List;
 public class GmallSearchServiceApplicationTests {
 
     @Reference
-    SkuService skuService;
+    SkuService skuService;// 查询mysql
+
 
     @Autowired
     JestClient jestClient;
 
     @Test
-    public void contextLoads() {
-        List<PmsSkuInfo> allSku = skuService.getAllSku();
+    public void contextLoads() throws IOException {
+        put();
+    }
 
-        ArrayList<PmsSkuInfo> list = new ArrayList<>();
-        for (PmsSkuInfo pmsSkuInfo : allSku) {
-            PmsSkuInfo pmsSkuInfo1 = new PmsSkuInfo();
+    public void put() throws IOException {
 
-            BeanUtils.copyProperties(pmsSkuInfo,pmsSkuInfo1);
-            list.add(pmsSkuInfo1);
+        // 查询mysql数据
+        List<PmsSkuInfo> pmsSkuInfoList = new ArrayList<>();
+
+        pmsSkuInfoList = skuService.getAllSku();
+
+        // 转化为es的数据结构
+        List<PmsSearchSkuInfo> pmsSearchSkuInfos = new ArrayList<>();
+
+        for (PmsSkuInfo pmsSkuInfo : pmsSkuInfoList) {
+            PmsSearchSkuInfo pmsSearchSkuInfo = new PmsSearchSkuInfo();
+
+            BeanUtils.copyProperties(pmsSkuInfo,pmsSearchSkuInfo);
+
+            pmsSearchSkuInfo.setId(Long.parseLong(pmsSkuInfo.getId()));
+
+            pmsSearchSkuInfos.add(pmsSearchSkuInfo);
+
         }
-        System.out.println(list);
+
+        // 导入es
+        for (PmsSearchSkuInfo pmsSearchSkuInfo : pmsSearchSkuInfos) {
+            Index put = new Index.Builder(pmsSearchSkuInfo).index("gmall0105").type("PmsSkuInfo").id(pmsSearchSkuInfo.getId()+"").build();
+            jestClient.execute(put);
+        }
+
     }
 
     public void get() throws IOException {
@@ -89,35 +110,6 @@ public class GmallSearchServiceApplicationTests {
         }
 
         System.out.println(pmsSearchSkuInfos.size());
-    }
-
-    public void put() throws Exception {
-
-        // 查询mysql数据
-        List<PmsSkuInfo> pmsSkuInfoList = new ArrayList<>();
-
-        pmsSkuInfoList = skuService.getAllSku();
-
-        // 转化为es的数据结构
-        List<PmsSearchSkuInfo> pmsSearchSkuInfos = new ArrayList<>();
-
-        for (PmsSkuInfo pmsSkuInfo : pmsSkuInfoList) {
-            PmsSearchSkuInfo pmsSearchSkuInfo = new PmsSearchSkuInfo();
-
-            BeanUtils.copyProperties(pmsSkuInfo,pmsSearchSkuInfo);
-
-            pmsSearchSkuInfo.setId(Long.parseLong(pmsSkuInfo.getId()));
-
-            pmsSearchSkuInfos.add(pmsSearchSkuInfo);
-
-        }
-
-        // 导入es
-        for (PmsSearchSkuInfo pmsSearchSkuInfo : pmsSearchSkuInfos) {
-            Index put = new Index.Builder(pmsSearchSkuInfo).index("gmall0105").type("PmsSkuInfo").id(pmsSearchSkuInfo.getId()+"").build();
-            jestClient.execute(put);
-        }
-
     }
 
 }
